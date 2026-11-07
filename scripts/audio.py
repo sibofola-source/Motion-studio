@@ -28,9 +28,9 @@ def fit(x):
 def lp_fast(x, fc):
     # cheap low-pass: three cascaded moving averages
     k = max(1, int(SR / (fc * 2.2)))
-    ker = np.ones(k) / k
-    for _ in range(3):
-        x = np.convolve(x, ker, mode='same')
+    for _ in range(3):  # centred moving average via cumulative sum (fast for long k)
+        c = np.cumsum(np.concatenate([np.zeros(k // 2 + 1), x, np.zeros(k - k // 2)]))
+        x = (c[k:k + len(x)] - c[:len(x)]) / k
     return x
 
 
@@ -156,6 +156,7 @@ gain = fade * 0.55
 vo = None
 if os.path.exists(vo_path):
     vo = fit(load(vo_path))
+    vo *= 0.09 / (np.sqrt((vo[np.abs(vo).max(1) > 1e-3] ** 2).mean()) + 1e-9)  # level the voice
     # duck: smoothed voice envelope pulls music down ~10 dB while speaking
     env = np.abs(vo).mean(1)
     env = lp_fast(env, 3)

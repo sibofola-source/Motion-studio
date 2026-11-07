@@ -51,7 +51,7 @@ function fromVoice(words) {
     return fallback;
   };
   const at = {};
-  const firstWords = (s, n = 2) => s.split(/\s+/).slice(0, n);
+  const firstWords = (s, n = 2) => s.split(/[\s-]+/).slice(0, n);
   at.title = Math.max(0, find(firstWords(cfg.name, 3), 0) - 0.5);
   // step past the rest of the name and the promise so their words can't be mistaken for letters
   for (const w of [...cfg.name.split(/\s+/), ...cfg.promise.split(/\s+/)].map(norm)) {
@@ -66,8 +66,8 @@ function fromVoice(words) {
   });
   at.closing = find(firstWords(cfg.closing, 2), last + 2.5) - 0.2;
   const voEnd = toks.length ? toks[toks.length - 1].end : at.closing + 2;
-  const endStart = Math.max(voEnd + 0.4, at.closing + 1.8);
-  return { at, endStart, duration: Math.max(cfg.duration, endStart + ENDCARD), source: 'voiceover' };
+  const endStart = Math.max(voEnd + 0.05, at.closing + 1.8);
+  return { at, endStart, duration: Math.max(cfg.duration, endStart + 2.6), source: 'voiceover' };
 }
 
 const hasVO = fs.existsSync(wordsFile);
