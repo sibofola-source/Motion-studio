@@ -22,7 +22,7 @@
 
   /* ---------- Scenes 2–4: steps ---------- */
   .step { align-items: center; justify-content: center; gap: 90px; padding: 0 200px;
-          animation: exitLeft .6s var(--ease-in-out) calc(var(--t0) + var(--hold, 5.4s)) forwards; }
+          animation: exitLeft var(--exit, .6s) var(--ease-in-out) calc(var(--t0) + var(--hold, 5.4s)) forwards; }
   .step .num   { font-size: 600px; line-height: .78; flex: 0 0 auto;
                  animation: slideIn .9s var(--ease-out) var(--t0) both; }
   .step .text  { max-width: 900px; }
@@ -35,14 +35,14 @@
   .dot  { width: 22px; height: 22px; border-radius: 50%; box-shadow: inset 0 0 0 3px var(--color-text);
           background: transparent;
           animation: fill .5s var(--ease-out) calc(var(--t0) + .3s) forwards,
-                     unfill .5s var(--ease-in-out) calc(var(--t0) + 5.5s) forwards; }
+                     unfill .5s var(--ease-in-out) calc(var(--t0) + var(--hold, 5.4s) + .1s) forwards; }
 
   /* ---------- Scene 5: end card (24–30s) ---------- */
-  .s5 .title { font-size: 250px; animation: settle 1.2s var(--ease-out) 24s both; }
-  .s5 .rule  { width: 560px; margin: 36px 0 48px; animation: draw 1s var(--ease-out) 25s both; }
-  .s5 .cta   { font-size: 76px; animation: fadeUp 1s var(--ease-out) 25.6s both; }
+  .s5 .title { font-size: 250px; animation: settle 1.2s var(--ease-out) 24.35s both; }
+  .s5 .rule  { width: 560px; margin: 36px 0 48px; animation: draw 1s var(--ease-out) 25.3s both; }
+  .s5 .cta   { font-size: 76px; animation: fadeUp 1s var(--ease-out) 25.9s both; }
   .s5 .links { margin-top: 34px; display: flex; flex-direction: column; gap: 10px; font-size: 50px;
-               animation: fadeUp 1s var(--ease-out) 26.1s both; }
+               animation: fadeUp 1s var(--ease-out) 26.4s both; }
 
   .s5 .store { font-style: normal; font-size: .8em; margin-right: .4em; }
 
@@ -105,7 +105,7 @@
       <div class="line body">Show the problem with evidence, not adjectives.</div>
     </div>
   </div>
-  <div class="scene step" style="--t0: 18s; --hold: 5.85s">
+  <div class="scene step" style="--t0: 18s; --hold: 5.85s; --exit: .45s">
     <div class="num headline">3</div>
     <div class="text">
       <div class="head headline">Plan for results</div>
@@ -116,7 +116,7 @@
   <div class="dots">
     <div class="dot" style="--t0: 6s"></div>
     <div class="dot" style="--t0: 12s"></div>
-    <div class="dot" style="--t0: 18s"></div>
+    <div class="dot" style="--t0: 18s; --hold: 5.85s"></div>
   </div>
 
   <!-- Scene 5: end card -->
