@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Brand check</title>
+<link rel="stylesheet" href="../../brand.css">
+<style>
+  /* Duration in seconds, read by render.js */
+  :root { --duration: 5; }
+
+  .wrap { position: absolute; inset: 110px 140px; display: flex; flex-direction: column; }
+  .eyebrow { font-size: 34px; }
+  .title { font-size: 96px; margin: 8px 0 70px; }
+
+  .swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px; }
+  .swatch { display: flex; flex-direction: column; gap: 22px; }
+  .chip {
+    height: 300px; border-radius: 28px;
+    box-shadow: inset 0 0 0 3px var(--color-muted); /* outline so the bg-coloured chip stays visible */
+  }
+  .role { font-size: 40px; }
+  .hex  { font-size: 30px; }
+
+  .type { margin-top: 70px; display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: end; }
+  .sample-h { font-size: 64px; }
+  .sample-b { font-size: 48px; }
+  .label { font-size: 26px; margin-bottom: 10px; font-family: var(--font-headline); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--color-muted); }
+
+  /* Motion: everything rises in with a stagger, holds, then gently fades */
+  .in { opacity: 0; animation: rise 0.9s var(--ease-out) forwards; }
+  @keyframes rise { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+  .stage { animation: out 0.6s var(--ease-in-out) 4.4s forwards; }
+  @keyframes out { to { opacity: 0; } }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="wrap">
+    <div class="eyebrow label in" style="animation-delay:.0s">Brand check</div>
+    <div class="title headline in" style="animation-delay:.1s">Funded</div>
+
+    <div class="swatches">
+      <div class="swatch in" style="animation-delay:.4s">
+        <div class="chip" style="background:var(--color-background)"></div>
+        <div class="role headline">Background</div><div class="hex body muted">#0B1F3A</div>
+      </div>
+      <div class="swatch in" style="animation-delay:.55s">
+        <div class="chip" style="background:var(--color-accent)"></div>
+        <div class="role headline">Accent</div><div class="hex body muted">#2F80ED</div>
+      </div>
+      <div class="swatch in" style="animation-delay:.7s">
+        <div class="chip" style="background:var(--color-text)"></div>
+        <div class="role headline">Text</div><div class="hex body muted">#FFC93C</div>
+      </div>
+      <div class="swatch in" style="animation-delay:.85s">
+        <div class="chip" style="background:var(--color-muted)"></div>
+        <div class="role headline">Muted</div><div class="hex body muted">#7F9CC2</div>
+      </div>
+    </div>
+
+    <div class="type">
+      <div class="in" style="animation-delay:1.2s">
+        <div class="label">Headline · Poppins ExtraBold</div>
+        <div class="sample-h headline">Aa Bb Cc 123</div>
+      </div>
+      <div class="in" style="animation-delay:1.35s">
+        <div class="label">Body · Lora Italic</div>
+        <div class="sample-b body">Aa Bb Cc 123</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
