@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Funded — explainer</title>
+<link rel="stylesheet" href="../../brand.css">
+<style>
+  :root { --duration: 30; }
+
+  /* ---------- shared ---------- */
+  .scene { position: absolute; inset: 0; display: flex; }
+  .rule  { height: 6px; background: var(--color-text); border-radius: 3px; transform-origin: left center; }
+  .center { flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .subtitle, .audience, .head, .line { text-wrap: balance; }
+
+  /* ---------- Scene 1: title (0–6s) ---------- */
+  .s1 .rule     { width: 560px; margin: 0 0 40px; animation: draw 1s var(--ease-out) 0s both; }
+  .s1 .title    { font-size: 230px; animation: rise 1.2s var(--ease-out) .5s both; }
+  .s1 .subtitle { font-size: 64px; max-width: 1700px; margin-top: 26px; animation: fadeUp 1s var(--ease-out) 1.5s both; }
+  .s1 .audience { font-size: 38px; max-width: 1300px; margin-top: 44px; animation: fadeUp 1s var(--ease-out) 2.3s both; }
+  .s1 { animation: exitUp .6s var(--ease-in-out) 5.4s forwards; }
+
+  /* ---------- Scenes 2–4: steps ---------- */
+  .step { align-items: center; justify-content: center; gap: 90px; padding: 0 200px;
+          animation: exitLeft .6s var(--ease-in-out) calc(var(--t0) + 5.4s) forwards; }
+  .step .num   { font-size: 600px; line-height: .78; flex: 0 0 auto;
+                 animation: slideIn .9s var(--ease-out) var(--t0) both; }
+  .step .text  { max-width: 900px; }
+  .step .head  { font-size: 116px; animation: rise .9s var(--ease-out) calc(var(--t0) + .4s) both; }
+  .step .line  { font-size: 54px; margin-top: 30px; animation: fadeUp .9s var(--ease-out) calc(var(--t0) + .9s) both; }
+
+  /* progress dots */
+  .dots { position: absolute; left: 0; right: 0; bottom: 110px; display: flex; justify-content: center; gap: 28px;
+          animation: fadeIn .6s var(--ease-out) 6s both, fadeOut .6s var(--ease-in-out) 23.4s forwards; }
+  .dot  { width: 22px; height: 22px; border-radius: 50%; box-shadow: inset 0 0 0 3px var(--color-text);
+          background: transparent;
+          animation: fill .5s var(--ease-out) calc(var(--t0) + .3s) forwards,
+                     unfill .5s var(--ease-in-out) calc(var(--t0) + 5.5s) forwards; }
+
+  /* ---------- Scene 5: end card (24–30s) ---------- */
+  .s5 .title { font-size: 250px; animation: settle 1.2s var(--ease-out) 24s both; }
+  .s5 .rule  { width: 560px; margin: 36px 0 48px; animation: draw 1s var(--ease-out) 25s both; }
+  .s5 .cta   { font-size: 76px; animation: fadeUp 1s var(--ease-out) 25.6s both; }
+  .s5 .links { margin-top: 34px; display: flex; flex-direction: column; gap: 10px; font-size: 50px;
+               animation: fadeUp 1s var(--ease-out) 26.1s both; }
+
+  /* ---------- vertical reel layout (1080x1920) ---------- */
+  .portrait .s1, .portrait .s5 { padding: 0 90px 260px; }       /* keep clear of reel UI at the bottom */
+  .portrait .s1 .title    { font-size: 210px; }
+  .portrait .s1 .subtitle { font-size: 66px; max-width: 880px; }
+  .portrait .s1 .audience { font-size: 42px; max-width: 860px; }
+  .portrait .s1 .rule, .portrait .s5 .rule { width: 420px; }
+  .portrait .step { flex-direction: column; align-items: flex-start; justify-content: center;
+                    gap: 60px; padding: 0 110px 300px; }
+  .portrait .step .num  { font-size: 640px; }
+  .portrait .step .text { max-width: 860px; }
+  .portrait .step .head { font-size: 112px; }
+  .portrait .step .line { font-size: 56px; }
+  .portrait .dots { bottom: auto; top: 200px; }
+  .portrait .s5 .title { font-size: 230px; }
+  .portrait .s5 .cta   { font-size: 72px; }
+  .portrait .s5 .links { font-size: 50px; }
+
+  /* ---------- keyframes ---------- */
+  @keyframes draw    { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes rise    { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: none; } }
+  @keyframes fadeUp  { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes fadeOut { to { opacity: 0; } }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(220px); } to { opacity: 1; transform: none; } }
+  @keyframes settle  { from { opacity: 0; transform: scale(.9); } to { opacity: 1; transform: none; } }
+  @keyframes exitUp  { to { opacity: 0; transform: translateY(-70px); } }
+  @keyframes exitLeft{ to { opacity: 0; transform: translateX(-260px); } }
+  @keyframes fill    { to { background: var(--color-text); } }
+  @keyframes unfill  { from { background: var(--color-text); } to { background: transparent; } }
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- Scene 1: title -->
+  <div class="scene center s1">
+    <div class="rule"></div>
+    <div class="title headline">Funded.</div>
+    <div class="subtitle body">A Practical Guide to Writing Grant Proposals That Win</div>
+    <div class="audience body">For proposal writers and learners in NGOs, governments, churches, businesses and communities</div>
+  </div>
+
+  <!-- Scenes 2–4: steps -->
+  <div class="scene step" style="--t0: 6s">
+    <div class="num headline">1</div>
+    <div class="text">
+      <div class="head headline">Know your funder</div>
+      <div class="line body">Match your project to what they already want to fund.</div>
+    </div>
+  </div>
+  <div class="scene step" style="--t0: 12s">
+    <div class="num headline">2</div>
+    <div class="text">
+      <div class="head headline">Prove the need</div>
+      <div class="line body">Show the problem with evidence, not adjectives.</div>
+    </div>
+  </div>
+  <div class="scene step" style="--t0: 18s">
+    <div class="num headline">3</div>
+    <div class="text">
+      <div class="head headline">Plan for results</div>
+      <div class="line body">Clear goals, a realistic budget, outcomes you can measure.</div>
+    </div>
+  </div>
+
+  <div class="dots">
+    <div class="dot" style="--t0: 6s"></div>
+    <div class="dot" style="--t0: 12s"></div>
+    <div class="dot" style="--t0: 18s"></div>
+  </div>
+
+  <!-- Scene 5: end card -->
+  <div class="scene center s5">
+    <div class="title headline">Funded.</div>
+    <div class="rule"></div>
+    <div class="cta headline">Get your copy today</div>
+    <div class="links body">
+      <div>payhip.com/b/SQ9k6</div>
+      <div>a.co/d/0csYsOv4</div>
+    </div>
+  </div>
+
+</div>
+<script>
+  // Size comes from ?size=WxH (set by render.js); default 1920x1080.
+  const m = /size=(\d+)x(\d+)/.exec(location.search);
+  if (m) {
+    const s = document.querySelector('.stage');
+    s.style.width = m[1] + 'px'; s.style.height = m[2] + 'px';
+    if (+m[2] > +m[1]) s.classList.add('portrait');
+  }
+</script>
+</body>
+</html>
