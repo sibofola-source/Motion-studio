@@ -5,7 +5,7 @@
 <title>Funded — explainer</title>
 <link rel="stylesheet" href="../../brand.css">
 <style>
-  :root { --duration: 30; }
+  :root { --duration: 30; }  /* voiceover.wav in this folder is muxed in by render.js */
 
   /* ---------- shared ---------- */
   .scene { position: absolute; inset: 0; display: flex; }
@@ -22,7 +22,7 @@
 
   /* ---------- Scenes 2–4: steps ---------- */
   .step { align-items: center; justify-content: center; gap: 90px; padding: 0 200px;
-          animation: exitLeft .6s var(--ease-in-out) calc(var(--t0) + 5.4s) forwards; }
+          animation: exitLeft .6s var(--ease-in-out) calc(var(--t0) + var(--hold, 5.4s)) forwards; }
   .step .num   { font-size: 600px; line-height: .78; flex: 0 0 auto;
                  animation: slideIn .9s var(--ease-out) var(--t0) both; }
   .step .text  { max-width: 900px; }
@@ -31,7 +31,7 @@
 
   /* progress dots */
   .dots { position: absolute; left: 0; right: 0; bottom: 110px; display: flex; justify-content: center; gap: 28px;
-          animation: fadeIn .6s var(--ease-out) 6s both, fadeOut .6s var(--ease-in-out) 23.4s forwards; }
+          animation: fadeIn .6s var(--ease-out) 6s both, fadeOut .6s var(--ease-in-out) 23.85s forwards; }
   .dot  { width: 22px; height: 22px; border-radius: 50%; box-shadow: inset 0 0 0 3px var(--color-text);
           background: transparent;
           animation: fill .5s var(--ease-out) calc(var(--t0) + .3s) forwards,
@@ -43,6 +43,8 @@
   .s5 .cta   { font-size: 76px; animation: fadeUp 1s var(--ease-out) 25.6s both; }
   .s5 .links { margin-top: 34px; display: flex; flex-direction: column; gap: 10px; font-size: 50px;
                animation: fadeUp 1s var(--ease-out) 26.1s both; }
+
+  .s5 .store { font-style: normal; font-size: .8em; margin-right: .4em; }
 
   /* ---------- vertical reel layout (1080x1920) ---------- */
   .portrait .s1, .portrait .s5 { padding: 0 90px 260px; }       /* keep clear of reel UI at the bottom */
@@ -59,7 +61,9 @@
   .portrait .dots { bottom: auto; top: 200px; }
   .portrait .s5 .title { font-size: 230px; }
   .portrait .s5 .cta   { font-size: 72px; }
-  .portrait .s5 .links { font-size: 50px; }
+  .portrait .s5 .links { font-size: 46px; gap: 26px; }
+  .portrait .s5 .links > div { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .portrait .s5 .store { margin-right: 0; font-size: .95em; }
 
   /* ---------- keyframes ---------- */
   @keyframes draw    { from { transform: scaleX(0); } to { transform: scaleX(1); } }
@@ -101,7 +105,7 @@
       <div class="line body">Show the problem with evidence, not adjectives.</div>
     </div>
   </div>
-  <div class="scene step" style="--t0: 18s">
+  <div class="scene step" style="--t0: 18s; --hold: 5.85s">
     <div class="num headline">3</div>
     <div class="text">
       <div class="head headline">Plan for results</div>
@@ -121,8 +125,8 @@
     <div class="rule"></div>
     <div class="cta headline">Get your copy today</div>
     <div class="links body">
-      <div>payhip.com/b/SQ9k6</div>
-      <div>a.co/d/0csYsOv4</div>
+      <div><span class="store headline">On Payhip</span> payhip.com/b/SQ9k6</div>
+      <div><span class="store headline">On Amazon</span> a.co/d/0csYsOv4</div>
     </div>
   </div>
 

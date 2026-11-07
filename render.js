@@ -8,6 +8,7 @@
  * A composition is compositions/<name>/index.html with a 1920x1080 .stage,
  * animated with CSS animations, and `--duration: <seconds>` on :root.
  * Rendering is deterministic: all animations are paused and scrubbed frame by frame.
+ * If compositions/<name>/voiceover.wav exists it is muxed in as the soundtrack (AAC).
  */
 const { chromium } = require('playwright');
 const { spawn } = require('child_process');
@@ -51,8 +52,10 @@ const tag = opt('size') ? `-${W}x${H}` : '';
     }
   } else {
     const file = path.join(outDir, `${name}${tag}.mp4`);
+    const audio = path.resolve(__dirname, 'compositions', name, 'voiceover.wav');
+    const audioArgs = fs.existsSync(audio) ? ['-i', audio, '-c:a', 'aac', '-b:a', '192k', '-shortest'] : [];
     const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(fps), '-i', '-',
-      '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '16', '-preset', 'slow', '-movflags', '+faststart', file],
+      ...audioArgs, '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '16', '-preset', 'slow', '-movflags', '+faststart', file],
       { stdio: ['pipe', 'inherit', 'inherit'] });
     const total = Math.round(duration * fps);
     for (let f = 0; f < total; f++) {
