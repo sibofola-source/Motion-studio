@@ -10,10 +10,10 @@
 @font-face { font-family: 'Inter'; font-weight: 400; src: url(../node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2); }
 @font-face { font-family: 'Inter'; font-weight: 500; src: url(../node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2); }
 
-:root { --bg: #0A0E14; --accent: #3EE0A8; }
+:root { --bg: #0A0E14; --accent: #3EE0A8; --W: 1920px; --H: 1080px; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); }
-#stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); color: #e8ecf1; font-family: 'Inter', sans-serif; }
+html, body { width: var(--W); height: var(--H); overflow: hidden; background: var(--bg); }
+#stage { position: relative; width: var(--W); height: var(--H); overflow: hidden; background: var(--bg); color: #e8ecf1; font-family: 'Inter', sans-serif; }
 .abs { position: absolute; }
 .center { left: 0; right: 0; text-align: center; }
 
@@ -22,7 +22,8 @@ html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--
 #vignette { inset: 0; background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,.55) 100%); }
 #grain { inset: 0; opacity: .07; mix-blend-mode: overlay; }
 
-.hline { left: 0; width: 1920px; height: 1px;
+#line1 { top: 156px; } #line2 { top: 924px; }
+.hline { left: 0; width: 100%; height: 1px;
   background: linear-gradient(90deg, transparent 0%, rgba(214,220,228,.15) 12%, rgba(236,240,245,.75) 50%, rgba(214,220,228,.15) 88%, transparent 100%); }
 
 .chrome { background-image:
@@ -61,17 +62,46 @@ html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--
 #e-handle { top: 632px; font-size: 32px; color: var(--accent); font-weight: 500; text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 55%, transparent); }
 #e-tag { top: 700px; font-family: 'Cormorant'; font-style: italic; font-weight: 500; font-size: 46px; color: #e3e8ee; }
 
-#prog-track { left: 0; bottom: 0; width: 1920px; height: 4px; background: rgba(255,255,255,.07); }
+#prog-track { left: 0; bottom: 0; width: 100%; height: 4px; background: rgba(255,255,255,.07); }
 #prog { left: 0; bottom: 0; height: 4px; background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 40%, #c9d0d8), var(--accent));
   box-shadow: 0 0 10px var(--accent), 0 0 22px color-mix(in srgb, var(--accent) 60%, transparent); }
+
+/* ---------- vertical 9:16 (1080x1920): content kept inside the safe area the
+   TikTok / Reels / Shorts / X / Facebook UI leaves clear (top ~250px, bottom ~420px, right ~130px) ---------- */
+.portrait #glow { width: 1500px; height: 2000px; margin: -1000px 0 0 -750px; }
+.portrait #line1 { top: 250px; } .portrait #line2 { top: 1560px; }
+.portrait .label { font-size: 25px; letter-spacing: .34em; }
+.portrait #t-label { top: 600px; }
+.portrait #t-name { top: 650px; font-size: 158px; line-height: 1.0; padding: 0 70px; }
+.portrait #t-line { top: 1000px; width: 460px; margin-left: -230px; }
+.portrait #t-promise { top: 1040px; font-size: 44px; line-height: 1.36; padding: 0 120px; }
+.portrait #r-head { top: 300px; }
+.portrait #row { top: 390px; width: 1080px; }
+.portrait .col { display: flex; align-items: center; text-align: left; }
+.portrait .box { flex: none; margin: 0; width: 176px; height: 176px; }
+.portrait .box span { font-size: 120px; }
+.portrait .txt { margin-left: 44px; }
+.portrait .word { margin-top: 0; font-size: 62px; }
+.portrait .meaning { margin: 8px 0 0; max-width: 560px; font-size: 29px; line-height: 1.38; }
+.portrait #sweep { top: 1330px; } .portrait #sweep-head { top: 1323px; }
+.portrait #closing { top: 1360px; font-size: 68px; padding: 0 80px; }
+.portrait #e-name { top: 690px; font-size: 136px; }
+.portrait #e-line { top: 880px; }
+.portrait #e-title { top: 918px; font-size: 25px; letter-spacing: .3em; }
+.portrait #e-handle { top: 974px; font-size: 38px; }
+.portrait #e-tag { top: 1046px; font-size: 52px; padding: 0 100px; }
+.portrait .meaning, .portrait #t-promise, .portrait #closing { text-wrap: balance; }
+/* the apps draw their own scrubber over the bottom edge, so the progress bar fills along the lower silver line */
+.portrait #prog-track { bottom: auto; top: 1559px; height: 3px; background: transparent; }
+.portrait #prog { bottom: auto; top: 1559px; height: 3px; }
 </style>
 </head>
 <body>
 <div id="stage">
   <div id="glow" class="abs"></div>
   <div id="vignette" class="abs"></div>
-  <div id="line1" class="abs hline" style="top:156px"></div>
-  <div id="line2" class="abs hline" style="top:924px"></div>
+  <div id="line1" class="abs hline"></div>
+  <div id="line2" class="abs hline"></div>
 
   <div id="t-label" class="abs center label"></div>
   <div id="t-name" class="abs center"><span class="chrome" id="t-name-txt"></span></div>
@@ -114,8 +144,13 @@ function blurIn(el, t, start, dur = 1.15, out = null, outDur = .7, rise = 18, ex
   return p;
 }
 
-function setup(cfg, tl) {
+function setup(cfg, tl, layout = 'landscape') {
   window.CFG = cfg; window.TL = tl;
+  const P = layout === 'portrait', W = P ? 1080 : 1920, H = P ? 1920 : 1080;
+  window.DIM = { W, H };
+  $('stage').classList.toggle('portrait', P);
+  document.documentElement.style.setProperty('--W', W + 'px');
+  document.documentElement.style.setProperty('--H', H + 'px');
   document.documentElement.style.setProperty('--bg', cfg.colors.background);
   document.documentElement.style.setProperty('--accent', cfg.colors.accent);
   $('t-label').textContent = cfg.label;
@@ -130,14 +165,18 @@ function setup(cfg, tl) {
 
   const n = cfg.letters.length, gap = 40;
   const colW = Math.min(390, (1700 - gap * (n - 1)) / n);
-  const total = colW * n + gap * (n - 1), x0 = (1920 - total) / 2;
-  window.ROW = { x0, total, colW, gap };
+  // landscape: a row of columns; portrait: a column of rows (box left, word + meaning right)
+  const total = P ? 820 : colW * n + gap * (n - 1), x0 = P ? 110 : (1920 - total) / 2;
+  const rowH = Math.min(236, 920 / n);
+  window.ROW = { x0, total };
   const row = $('row');
   cfg.letters.forEach((l, i) => {
     const c = document.createElement('div');
-    c.className = 'col'; c.style.left = (x0 + i * (colW + gap)) + 'px'; c.style.width = colW + 'px';
+    c.className = 'col';
+    if (P) { c.style.left = '100px'; c.style.width = '880px'; c.style.top = (i * rowH) + 'px'; }
+    else { c.style.left = (x0 + i * (colW + gap)) + 'px'; c.style.width = colW + 'px'; }
     c.innerHTML = `<div class="box"><span class="dim">${l.letter}</span><span class="lit">${l.letter}</span><span class="chrome silver">${l.letter}</span></div>
-      <div class="word">${l.word}</div><div class="meaning">${l.meaning}</div>`;
+      <div class="txt"><div class="word">${l.word}</div><div class="meaning">${l.meaning}</div></div>`;
     row.appendChild(c);
   });
 }
@@ -174,7 +213,7 @@ function renderAt(t) {
   const cols = document.querySelectorAll('#row .col');
   cols.forEach((c, i) => {
     const box = c.children[0], [dim, lit, silver] = box.children;
-    const word = c.children[1], meaning = c.children[2];
+    const [word, meaning] = c.children[1].children;
     const on = tl.letters[i], off = tl.letterOff[i];
     blurIn(box, t, tl.rowIn + i * .12, 1.1, rowOut, .8, 22);
     const a = ease(prog(t, on - .05, .45)) * (1 - ease(prog(t, off, .7)));    // lit amount
@@ -184,9 +223,8 @@ function renderAt(t) {
     silver.style.opacity = s;
     silver.style.backgroundPosition = `${140 - 180 * ease(prog(t, off, 1.6))}% 0, 0 0`;
     // the sweep head passing under a box gives it a brief glint
-    const cx = ROW.x0 + i * (ROW.colW + ROW.gap) + ROW.colW / 2;
-    const headX = ROW.x0 - 40 + (ROW.total + 80) * ease(prog(t, tl.sweep, 1.3));
-    const glint = t > tl.sweep ? Math.exp(-Math.pow((headX - cx) / 120, 2)) : 0;
+    const n = cols.length, head = ease(prog(t, tl.sweep, 1.3));
+    const glint = t > tl.sweep ? Math.exp(-Math.pow((head - (i + .5) / n) / (.35 / n), 2)) : 0;
     const bw = Math.max(a, glint * .8);
     box.style.borderColor = `color-mix(in srgb, ${acc} ${Math.round(bw * 100)}%, rgba(205,213,222,${.22 + .3 * s}))`;
     box.style.boxShadow = `0 0 ${40 * bw}px color-mix(in srgb, ${acc} ${Math.round(bw * 55)}%, transparent), inset 0 0 ${30 * bw}px color-mix(in srgb, ${acc} ${Math.round(bw * 25)}%, transparent)`;
@@ -218,10 +256,10 @@ function renderAt(t) {
   // grain shifts each frame so it reads as film, not a pattern
   $('grain').style.transform = `translate(${(Math.floor(t * 30) * 37) % 60 - 30}px, ${(Math.floor(t * 30) * 53) % 60 - 30}px)`;
   $('grain').style.left = '-30px'; $('grain').style.top = '-30px';
-  $('grain').setAttribute('width', 1980); $('grain').setAttribute('height', 1140);
+  $('grain').setAttribute('width', DIM.W + 60); $('grain').setAttribute('height', DIM.H + 60);
 
   // progress bar runs the whole time
-  $('prog').style.width = (1920 * clamp(t / T)) + 'px';
+  $('prog').style.width = (DIM.W * clamp(t / T)) + 'px';
 
   // final fade to black over the last half second
   $('stage').style.opacity = 1 - ease(prog(t, T - .4, .4));

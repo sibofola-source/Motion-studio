@@ -8,11 +8,16 @@ const root = path.join(__dirname, '..');
 const cfg = JSON.parse(fs.readFileSync(path.join(root, 'framework.config.json'), 'utf8'));
 const tl = JSON.parse(fs.readFileSync(path.join(root, 'out', 'timeline.json'), 'utf8'));
 const url = 'file://' + path.join(root, 'video', 'index.html');
+// FORMAT=vertical renders the 1080x1920 reel; default is the 1920x1080 landscape cut
+const vertical = process.env.FORMAT === 'vertical';
+const layout = vertical ? 'portrait' : 'landscape';
+const W = vertical ? 1080 : cfg.width, H = vertical ? 1920 : cfg.height;
+const prefix = vertical ? 'vertical-' : '';
 
 async function openPage(browser) {
-  const page = await browser.newPage({ viewport: { width: cfg.width, height: cfg.height }, deviceScaleFactor: 1 });
+  const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
   await page.goto(url);
-  await page.evaluate(async ([c, t]) => { setup(c, t); await document.fonts.ready; }, [cfg, tl]);
+  await page.evaluate(async ([c, t, l]) => { setup(c, t, l); await document.fonts.ready; }, [cfg, tl, layout]);
   return page;
 }
 
@@ -23,7 +28,7 @@ async function openPage(browser) {
     const page = await openPage(browser);
     for (const s of args) {
       await page.evaluate((t) => renderAt(t), +s);
-      const f = path.join(root, 'out', `still-${(+s).toFixed(1)}s.png`);
+      const f = path.join(root, 'out', `${prefix}still-${(+s).toFixed(1)}s.png`);
       await page.screenshot({ path: f });
       console.log(f);
     }

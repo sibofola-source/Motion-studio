@@ -1,14 +1,16 @@
 # Motion-studio
 
-## Framework explainer (20 s, 1920×1080, 30 fps)
+## Framework explainer (20 s, 30 fps)
 
-`out/framework-explainer.mp4`, with preview stills in `out/still-*.png`.
+- `out/framework-explainer.mp4`: 16:9, 1920×1080 (YouTube, LinkedIn, websites). Stills: `out/still-*.png`
+- `out/framework-reel-vertical.mp4`: 9:16, 1080×1920, one file for TikTok, YouTube Shorts, Instagram Reels, Facebook Reels and X. Stills: `out/vertical-still-*.png`. Letters are stacked, and all text stays inside the area the apps' buttons and captions leave clear.
 
 **Edit `framework.config.json`** to change the framework name, promise, letters (any number), closing line, end card and colours. Then run:
 
 ```bash
 ./build.sh stills   # just the 3 preview stills
 ./build.sh          # stills + full MP4
+FORMAT=vertical ./build.sh   # the 9:16 reel
 ```
 
 - **Voiceover:** drop your recording at `assets/vo.mp3`. The build transcribes it with Whisper (faster-whisper, installed on first run) and times every scene to your voice. Each letter lights when you say the letter or its word, and the music ducks under your voice. With no file, timing comes from the amount of text on screen.
