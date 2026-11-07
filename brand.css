@@ -6,11 +6,9 @@
 @import url("./fonts/fonts.css");
 
 :root {
-  /* Colours (brief: background Blue, accent Blue, text Yellow, muted Blue) */
+  /* Colours (brief: background Blue, text Yellow) — only these two */
   --color-background: #0B1F3A; /* Blue — deep navy */
-  --color-accent:     #2F80ED; /* Blue — bright brand blue */
   --color-text:       #FFC93C; /* Yellow — warm golden yellow */
-  --color-muted:      #7F9CC2; /* Blue — soft dusty blue */
 
   /* Type */
   --font-headline: "Poppins", sans-serif; /* set in --color-text (yellow) */
@@ -39,7 +37,6 @@
   color: var(--color-text);
   line-height: 1.35;
 }
-.muted { color: var(--color-muted); }
 
 /* Video stage: 1920x1080 */
 html, body { margin: 0; padding: 0; background: var(--color-background); }
