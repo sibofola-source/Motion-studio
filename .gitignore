@@ -1,0 +1,5 @@
+node_modules/
+out/frames/
+out/mix.wav
+out/timeline.json
+assets/vo.words.json

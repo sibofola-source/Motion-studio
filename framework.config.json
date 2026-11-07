@@ -1,0 +1,28 @@
+{
+  "_note": "Edit this file to change the video. Everything on screen, the colours and the timing come from here.",
+  "duration": 20,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "colors": {
+    "background": "#0A0E14",
+    "accent": "#3EE0A8"
+  },
+  "label": "A framework for climate founders",
+  "name": "The FUND Framework",
+  "acronym": "FUND",
+  "promise": "Turn a good climate idea into a funded climate project.",
+  "letters": [
+    { "letter": "F", "word": "Find",       "meaning": "Match your project to the funds built for it." },
+    { "letter": "U", "word": "Understand", "meaning": "Learn what each funder needs to say yes." },
+    { "letter": "N", "word": "Narrate",    "meaning": "Tell the impact story in their language." },
+    { "letter": "D", "word": "Deliver",    "meaning": "Back every claim with clear, credible evidence." }
+  ],
+  "closing": "Fund-ready, every single time.",
+  "endCard": {
+    "name": "Sibo Folarin",
+    "title": "Climate Finance Consultant",
+    "handle": "@ClimateFunded",
+    "tagline": "Helping climate ideas get funded."
+  }
+}
