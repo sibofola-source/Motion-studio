@@ -1,0 +1,56 @@
+/* ============================================================
+   Brand tokens — Motion Studio
+   Fonts are self-hosted from ./fonts so renders work offline.
+   ============================================================ */
+
+/* Headline: Fraunces (Google Fonts, OFL) — variable weight 100–900 */
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: block;
+  src: url("fonts/Fraunces-Variable-latin.woff2") format("woff2"),
+       url("fonts/Fraunces-ExtraBold.ttf") format("truetype");
+}
+
+/* Body: Lora Italic (Google Fonts, OFL) — variable weight 400–700 */
+@font-face {
+  font-family: "Lora";
+  font-style: italic;
+  font-weight: 400 700;
+  font-display: block;
+  src: url("fonts/Lora-Italic-Variable-latin.woff2") format("woff2"),
+       url("fonts/Lora-Italic.ttf") format("truetype");
+}
+
+:root {
+  /* Colors */
+  --brand-bg:     #0E2A4F; /* Blue — deep navy */
+  --brand-accent: #FF6B4A; /* PLACEHOLDER — brief said "[#HEX ACCENT]"; coral chosen until a real hex is given */
+  --brand-text:   #F6D44C; /* Yellow — warm sunflower */
+  --brand-muted:  #B89A5E; /* Muted gold */
+
+  /* Typography */
+  --font-headline: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body:     "Lora", Georgia, "Times New Roman", serif;
+  --headline-weight: 800;
+  --headline-color: var(--brand-text); /* headlines are yellow */
+  --body-style: italic;                /* body copy is italic */
+}
+
+body {
+  background: var(--brand-bg);
+  color: var(--brand-text);
+  font-family: var(--font-body);
+  font-style: var(--body-style);
+}
+
+h1, h2, h3, .headline {
+  font-family: var(--font-headline);
+  font-weight: var(--headline-weight);
+  font-style: normal;
+  color: var(--headline-color);
+}
+
+.muted  { color: var(--brand-muted); }
+.accent { color: var(--brand-accent); }

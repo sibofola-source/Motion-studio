@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Brand Check</title>
+<link rel="stylesheet" href="../brand.css">
+<style>
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  body { padding: 90px 120px; box-sizing: border-box; display: flex; flex-direction: column; }
+  .kicker { font-family: var(--font-body); font-size: 30px; letter-spacing: .04em; margin: 0 0 6px; }
+  h1 { font-size: 96px; margin: 0 0 56px; line-height: 1; }
+  .swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px; }
+  .sw { opacity: 0; transform: translateY(40px); }
+  .chip { height: 250px; border-radius: 22px; box-shadow: inset 0 0 0 3px rgba(246,212,76,.35); }
+  .name { font-family: var(--font-headline); font-weight: 700; font-style: normal; font-size: 36px; margin-top: 20px; color: var(--brand-text); }
+  .hex  { font-size: 28px; color: var(--brand-muted); margin-top: 4px; }
+  .fonts { margin-top: 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; border-top: 2px solid var(--brand-muted); padding-top: 40px; }
+  .f { opacity: 0; }
+  .f .label { font-size: 26px; color: var(--brand-muted); margin-bottom: 10px; }
+  .f .h { font-family: var(--font-headline); font-weight: 800; font-style: normal; font-size: 76px; line-height: 1.05; color: var(--brand-text); }
+  .f .b { font-size: 44px; line-height: 1.3; color: var(--brand-text); }
+  .bar { position: absolute; left: 0; bottom: 0; height: 10px; background: var(--brand-accent); width: 0; }
+</style>
+</head>
+<body>
+  <p class="kicker muted">Motion Studio</p>
+  <h1 id="title" style="opacity:0">Brand Check</h1>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:var(--brand-bg)"></div><div class="name">Background · Blue</div><div class="hex">#0E2A4F</div></div>
+    <div class="sw"><div class="chip" style="background:var(--brand-accent)"></div><div class="name">Accent</div><div class="hex">#FF6B4A (placeholder)</div></div>
+    <div class="sw"><div class="chip" style="background:var(--brand-text)"></div><div class="name">Text · Yellow</div><div class="hex">#F6D44C</div></div>
+    <div class="sw"><div class="chip" style="background:var(--brand-muted)"></div><div class="name">Muted · Gold</div><div class="hex">#B89A5E</div></div>
+  </div>
+  <div class="fonts">
+    <div class="f"><div class="label">Headline — Fraunces ExtraBold</div><div class="h">Bold ideas, in motion.</div></div>
+    <div class="f"><div class="label">Body — Lora Italic</div><div class="b">The quick brown fox jumps over the lazy dog. 0123456789</div></div>
+  </div>
+  <div class="bar"></div>
+<script>
+  // Deterministic frame renderer: window.seek(t) sets the scene to time t (seconds, 0–5).
+  const ease = x => 1 - Math.pow(1 - Math.min(Math.max(x, 0), 1), 3);
+  window.seek = t => {
+    const title = document.getElementById('title');
+    title.style.opacity = ease(t / 0.5);
+    title.style.transform = `translateY(${(1 - ease(t / 0.5)) * 30}px)`;
+    document.querySelectorAll('.sw').forEach((el, i) => {
+      const p = ease((t - 0.4 - i * 0.3) / 0.6);
+      el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * 40}px)`;
+    });
+    document.querySelectorAll('.f').forEach((el, i) => {
+      const p = ease((t - 2.0 - i * 0.4) / 0.7);
+      el.style.opacity = p; el.style.transform = `translateX(${(1 - p) * -30}px)`;
+    });
+    document.querySelector('.bar').style.width = (t / 5 * 100) + '%';
+  };
+  window.seek(0);
+</script>
+</body>
+</html>
